@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Popper, Listbox } from '@mui/base';
+import { Popper } from '@mui/base';
 import './Autocomplete.css';
 
 const Autocomplete = ({ options }) => {
   const [inputValue, setInputValue] = useState('');
-  const [filteredOptions, setFilteredOptions] = useState(options);
+  const [filteredOptions, setFilteredOptions] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleInputChange = (event) => {
@@ -32,9 +32,9 @@ const Autocomplete = ({ options }) => {
         className="border p-2 w-full"
         placeholder="Type to search..."
       />
-      {isOpen && (
-        <Popper open={isOpen}>
-          <Listbox className="absolute w-full bg-white border mt-1">
+      {isOpen && filteredOptions.length > 0 && (
+        <Popper open={isOpen} anchorEl={document.querySelector('input')}>
+          <ul className="absolute w-full bg-white border mt-1">
             {filteredOptions.map(option => (
               <li
                 key={option}
@@ -44,7 +44,7 @@ const Autocomplete = ({ options }) => {
                 {option}
               </li>
             ))}
-          </Listbox>
+          </ul>
         </Popper>
       )}
     </div>

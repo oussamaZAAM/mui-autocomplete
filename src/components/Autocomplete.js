@@ -24,13 +24,13 @@ const Autocomplete = ({ options }) => {
       {focused && groupedOptions.length > 0 && (
         <ul
           {...getListboxProps()}
-          className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-1 shadow-lg max-h-60 overflow-y-auto"
+          className="absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 shadow-lg max-h-60 overflow-y-auto w-full"
         >
           {groupedOptions.map((option, index) => (
             <li
               {...getOptionProps({ option, index })}
               key={option}
-              className="cursor-pointer hover:bg-blue-500 hover:text-white px-4 py-2"
+              className="cursor-pointer hover:bg-blue-500 hover:text-white px-4 py-2 text-left"  // Added text-left for left alignment
             >
               {highlightMatch(option, inputValue)}
             </li>

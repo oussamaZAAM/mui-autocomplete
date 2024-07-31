@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useAutocomplete } from '@mui/base';
 
+// Basic Autocomplete component to be extended by other components
 const Autocomplete = ({ options }) => {
+  // State to manage the currently highlighted index (for keyboard navigation)
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
   const {
@@ -15,30 +17,16 @@ const Autocomplete = ({ options }) => {
   } = useAutocomplete({
     options,
     getOptionLabel: (option) => option,
+    // Update the highlighted index when the user navigates using the keyboard
     onHighlightChange: (_, option) => {
       setHighlightedIndex(option ? groupedOptions.indexOf(option) : -1);
     },
   });
 
-  const handleKeyDown = (event) => {
-    if (event.key === 'ArrowDown') {
-      setHighlightedIndex((prev) => Math.min(prev + 1, groupedOptions.length - 1));
-      event.preventDefault();
-    } else if (event.key === 'ArrowUp') {
-      setHighlightedIndex((prev) => Math.max(prev - 1, 0));
-      event.preventDefault();
-    } else if (event.key === 'Enter' && highlightedIndex >= 0) {
-      const selectedOption = groupedOptions[highlightedIndex];
-      alert(`Selected: ${selectedOption}`);
-      setHighlightedIndex(-1); // Reset after selection
-    }
-  };
-
   return (
     <div {...getRootProps()} ref={setAnchorEl} className="relative max-w-md mx-auto">
       <input
         {...getInputProps()}
-        onKeyDown={handleKeyDown}
         className="border-2 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-lg p-3 w-full text-gray-700 leading-tight shadow-sm"
         placeholder="Type to search..."
       />
@@ -54,6 +42,9 @@ const Autocomplete = ({ options }) => {
               className={`cursor-pointer px-4 py-2 text-left ${
                 highlightedIndex === index ? 'bg-gray-200' : ''
               }`}
+              style={{
+                backgroundColor: highlightedIndex === index ? '#e2e8f0' : '',
+              }}
             >
               {highlightMatch(option, getInputProps().value)}
             </li>
